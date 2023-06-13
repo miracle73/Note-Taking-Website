@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
 import NoteItem from '../components/NoteItem'
 
+
 const HomePage = ({ notes }) => {
     return (
         <section>

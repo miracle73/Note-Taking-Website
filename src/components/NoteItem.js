@@ -6,7 +6,8 @@ const NoteItem = ({ note }) => {
         <div>
             <Link to={`/edit-note/${note.id}`} className="note">
                 <h4>{note.title.length > 20 ? note.title.substr(0, 20) + '...' : note.title}</h4>
-                <p>{note.title.details > 40 ? note.title.substr(0, 40) + '...' : note.title}</p>
+                <p>{note.details.length > 40 ? note.details.substr(0, 40) + '...' : note.details}</p>
+                {/* <p>{note.date}</p> */}
 
             </Link>
         </div>

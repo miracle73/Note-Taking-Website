@@ -1,18 +1,23 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
-import DummyNotes from '../dummy_notes'
+import CreateDate from '../components/useCreateDate'
+import { v4 as uuidv4 } from 'uuid'
 
-const CreateNote = () => {
+const CreateNote = ({ setter }) => {
     const [Title, setTitle] = useState("")
     const [Details, setDetails] = useState("")
+    const navigate = useNavigate()
+    const ID = uuidv4();
 
     const onFormSubmit = (e) => {
         e.preventDefault();
 
         if (Title && Details) {
-            console.log(Title, Details)
-            DummyNotes.push({ id: DummyNotes.length + 1, title: Title, details: Details, date: new Date(Date.now()) })
+            console.log(Title, Details, CreateDate())
+            const data = { id: ID, title: Title, details: Details, date: CreateDate() }
+            setter((prevData) => [data, ...prevData])
+            navigate('/')
         }
 
     }
@@ -24,8 +29,8 @@ const CreateNote = () => {
                 <button className="btn lg primary" onClick={onFormSubmit}>Save</button>
             </header>
             <form className="create-note__form" onSubmit={onFormSubmit}>
-                <input type="text" placeholder="Title" autoFocus onChange={(e) => setTitle(e.target.value)} />
-                <textarea rows="20" placeholder="Note details..." onChange={(e) => setDetails(e.target.value)} />
+                <input id="text" type="text" placeholder="Title" autoFocus onChange={(e) => setTitle(e.target.value)} />
+                <textarea id="textarea" rows="20" placeholder="Note details..." onChange={(e) => setDetails(e.target.value)} />
 
             </form>
         </section>
