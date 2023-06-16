@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
@@ -9,14 +9,19 @@ const EditNote = ({ notes, setter }) => {
     const { id } = useParams();
     console.log(id)
     let note;
+    useEffect(() => {
+        localStorage.removeItem('notes')
+
+        localStorage.setItem('notes', JSON.stringify(notes))
+    }, [notes])
     for (let i = 0; i < notes.length; i++) {
         if (notes[i].id === id) {
             note = notes[i]
             console.log(note)
         }
     }
-    const [title, setTitle] = useState(note.title)
-    const [details, setDetails] = useState(note.details)
+    const [title, setTitle] = useState(note.title ? note.title : ' ')
+    const [details, setDetails] = useState(note.details ? note.details : ' ')
     console.log(title, details)
     const onChangeTitle = (e) => {
         setTitle(e.target.value)
@@ -26,7 +31,6 @@ const EditNote = ({ notes, setter }) => {
         setDetails(e.target.value)
 
     }
-    const notee = { id, title, details, date: createDate() }
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -42,17 +46,39 @@ const EditNote = ({ notes, setter }) => {
             });
             console.log(updatedNotes)
             let noted
-            for (let i = 0; i < prevNotes.length; i++) {
-                if (prevNotes[i].id === id) {
-                    noted = prevNotes.splice(i, 1)
+            for (let i = 0; i < updatedNotes.length; i++) {
+                if (updatedNotes[i].id === id) {
+                    noted = updatedNotes.splice(i, 1)
                     console.log(noted)
+                    console.log(noted.length)
                 }
             }
-            return [...noted, ...prevNotes];
+            return [...noted, ...updatedNotes];
         });
         navigate('/')
     };
+    const handleDelete = (e) => {
+        e.preventDefault()
+        // setter((prevNotes) => {
+        //     const note = prevNotes.findIndex(noteItem => noteItem.id === id)
+        //     console.log(note)
+        //     const prevNote = [...prevNotes]
 
+        //     const noted = prevNote.splice(note, 1)
+        //     console.log(prevNote)
+        //     console.log(noted)
+        //     return [...prevNote];
+        // });
+
+        const noteIndex = notes.findIndex((noteItem) => noteItem.id === id)
+        console.log(note)
+        const removedNote = notes.splice(noteIndex, 1)
+        console.log(removedNote)
+        console.log(notes)
+        setter(notes)
+
+        navigate('/')
+    }
 
 
     return (
@@ -60,7 +86,7 @@ const EditNote = ({ notes, setter }) => {
             <header className="create-note__header">
                 <Link to="/" className="btn"><AiOutlineArrowLeft /></Link>
                 <button className="btn lg primary" onClick={onSubmit}>Save</button>
-                <button className="btn danger">< RiDeleteBin6Fill /></button>
+                <button className="btn danger" onClick={handleDelete}>< RiDeleteBin6Fill /></button>
             </header>
             <form className="create-note__form" onSubmit={onSubmit}>
                 <input type="text" placeholder="Title" value={title} onChange={onChangeTitle} autoFocus />

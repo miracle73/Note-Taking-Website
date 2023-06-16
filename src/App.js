@@ -8,8 +8,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 const App = () => {
     const [Notes, setNotes] = useState(JSON.parse(localStorage.getItem('notes')) || [])
     useEffect(() => {
+        localStorage.removeItem('notes')
         localStorage.setItem('notes', JSON.stringify(Notes))
-    }, [Notes])
+    }, [Notes, setNotes])
 
     return (
         <div>
