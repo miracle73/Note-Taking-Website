@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { AiOutlineArrowLeft } from 'react-icons/ai'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
@@ -9,11 +9,7 @@ const EditNote = ({ notes, setter }) => {
     const { id } = useParams();
     console.log(id)
     let note;
-    useEffect(() => {
-        localStorage.removeItem('notes')
 
-        localStorage.setItem('notes', JSON.stringify(notes))
-    }, [notes])
     for (let i = 0; i < notes.length; i++) {
         if (notes[i].id === id) {
             note = notes[i]
@@ -76,6 +72,13 @@ const EditNote = ({ notes, setter }) => {
         console.log(removedNote)
         console.log(notes)
         setter(notes)
+
+        // Remove note from localStorage
+        const storedNotes = JSON.parse(localStorage.getItem('notes'));
+        const updatedStoredNotes = storedNotes.filter((note) => note.id !== id);
+        localStorage.setItem('notes', JSON.stringify(updatedStoredNotes));
+
+
 
         navigate('/')
     }
