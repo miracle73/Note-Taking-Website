@@ -65,22 +65,24 @@ const EditNote = ({ notes, setter }) => {
         //     console.log(noted)
         //     return [...prevNote];
         // });
+        if (window.confirm('Are you sure you want to delete?')) {
+            const noteIndex = notes.findIndex((noteItem) => noteItem.id === id)
+            console.log(note)
+            const removedNote = notes.splice(noteIndex, 1)
+            console.log(removedNote)
+            console.log(notes)
+            setter(notes)
 
-        const noteIndex = notes.findIndex((noteItem) => noteItem.id === id)
-        console.log(note)
-        const removedNote = notes.splice(noteIndex, 1)
-        console.log(removedNote)
-        console.log(notes)
-        setter(notes)
-
-        // Remove note from localStorage
-        const storedNotes = JSON.parse(localStorage.getItem('notes'));
-        const updatedStoredNotes = storedNotes.filter((note) => note.id !== id);
-        localStorage.setItem('notes', JSON.stringify(updatedStoredNotes));
+            // Remove note from localStorage
+            const storedNotes = JSON.parse(localStorage.getItem('notes'));
+            const updatedStoredNotes = storedNotes.filter((note) => note.id !== id);
+            localStorage.setItem('notes', JSON.stringify(updatedStoredNotes));
 
 
 
-        navigate('/')
+            navigate('/')
+        }
+
     }
 
 

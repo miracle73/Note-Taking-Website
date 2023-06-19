@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { CiSearch } from 'react-icons/ci'
 import { Link } from 'react-router-dom'
 import { BsFillPlusCircleFill } from 'react-icons/bs'
+import { AiOutlineClose } from 'react-icons/ai'
 import NoteItem from '../components/NoteItem'
 
 
@@ -9,9 +10,9 @@ const HomePage = ({ notes }) => {
     const [showSearch, setShowSearch] = useState(false)
     const [text, setText] = useState('')
     const [filteredNotes, setFilteredNotes] = useState(notes)
-    const search = (e) => {
-        setText(e.target.value)
-    }
+    // const search = (e) => {
+    //     setText(e.target.value)
+    // }
     const handleSearch = () => {
         // search(e)
 
@@ -40,11 +41,11 @@ const HomePage = ({ notes }) => {
                     setText(e.target.value);
                     handleSearch()
                 }} placeholder="Keyword ....." />}
-                <button className={"btn"} onClick={() => setShowSearch(prev => !prev)}><CiSearch /></button>
+                <button className={"btn"} onClick={() => setShowSearch(prev => !prev)}>{!showSearch ? <CiSearch /> : <AiOutlineClose />}</button>
             </header>
             <div className="notes__container">
                 {
-                    filteredNotes.map(note => <NoteItem key={note.id} note={note} />)
+                    filteredNotes.length === 0 ? <p className="empty__notes">No Note found</p> : filteredNotes.map(note => <NoteItem key={note.id} note={note} />)
                 }
             </div>
             <Link className="btn add__btn" to="/create-note"><BsFillPlusCircleFill /></Link>
