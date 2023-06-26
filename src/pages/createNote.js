@@ -14,7 +14,6 @@ const CreateNote = ({ setter }) => {
         e.preventDefault();
 
         if (Title || Details) {
-            console.log(Title, Details, CreateDate())
             const data = { id: ID, title: Title, details: Details, date: CreateDate() }
             setter((prevData) => [data, ...prevData])
             navigate('/')

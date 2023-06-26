@@ -16,9 +16,8 @@ const EditNote = ({ notes, setter }) => {
             console.log(note)
         }
     }
-    const [title, setTitle] = useState(note.title ? note.title : ' ')
-    const [details, setDetails] = useState(note.details ? note.details : ' ')
-    console.log(title, details)
+    const [title, setTitle] = useState(note.title)
+    const [details, setDetails] = useState(note.details)
     const onChangeTitle = (e) => {
         setTitle(e.target.value)
 
@@ -55,16 +54,6 @@ const EditNote = ({ notes, setter }) => {
     };
     const handleDelete = (e) => {
         e.preventDefault()
-        // setter((prevNotes) => {
-        //     const note = prevNotes.findIndex(noteItem => noteItem.id === id)
-        //     console.log(note)
-        //     const prevNote = [...prevNotes]
-
-        //     const noted = prevNote.splice(note, 1)
-        //     console.log(prevNote)
-        //     console.log(noted)
-        //     return [...prevNote];
-        // });
         if (window.confirm('Are you sure you want to delete?')) {
             const noteIndex = notes.findIndex((noteItem) => noteItem.id === id)
             console.log(note)

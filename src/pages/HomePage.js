@@ -10,13 +10,8 @@ const HomePage = ({ notes }) => {
     const [showSearch, setShowSearch] = useState(false)
     const [text, setText] = useState('')
     const [filteredNotes, setFilteredNotes] = useState(notes)
-    // const search = (e) => {
-    //     setText(e.target.value)
-    // }
+
     const handleSearch = () => {
-        // search(e)
-
-
         const filteredNote = notes.filter((note) => {
             let noted
             // if (note.title.toLowerCase().match(text.toLowerCase())) {
