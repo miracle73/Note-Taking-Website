@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 public/index2.html
+/src/components/NoteItem2.js
 
 # testing
 /coverage
