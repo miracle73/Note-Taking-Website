@@ -18,9 +18,10 @@ const HomePage = ({ notes }) => {
             //     noted = note
             // }
             if (note.title.toLowerCase().startsWith(text.toLowerCase())) {
-                noted = note
+                return note
+                // noted = note
             }
-            return noted
+            // return note
         })
 
         setFilteredNotes(filteredNote)
